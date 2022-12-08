@@ -48,6 +48,21 @@ app.get('/', (req, res) => {
     });
 });
 
+app.get('/author/:author_id', (req, res) => {
+    let query = `select article.id, article.name, article.slug, article.image, article.body, article.published, author.name as author, author.id as author_id from article JOIN author ON article.author_id = author.id where author_id = "${req.params.author_id}";`
+    let articles = []
+    let author
+    con.query(query, (err, result) => {
+        if (err) throw err
+        articles = result
+        author = result[0]
+        res.render('author', {
+            articles: articles,
+            author: author
+        })
+    })
+});
+
 app.get('/article/:slug', (req, res) => {
     let query = `SELECT article.id, article.name, article.slug, article.image, article.body, article.published, author.name AS author, author.id AS author_id FROM article JOIN author ON article.author_id = author.id WHERE slug = "${req.params.slug}";`
     let article
