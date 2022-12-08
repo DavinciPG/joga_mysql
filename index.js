@@ -36,6 +36,18 @@ con.connect(function(err) {
    console.log('Connection stable.');
 });
 
+app.get('/', (req, res) => {
+    let query = 'SELECT * FROM article';
+    let articles = [];
+    con.query(query, (err, result) => {
+       if(err) throw err;
+       articles = result;
+    });
+    res.render('index', {
+        articles: articles
+    });
+});
+
 // start app
 app.listen(3000, () => {
    console.log('App listening at 3000');
