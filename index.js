@@ -42,9 +42,9 @@ app.get('/', (req, res) => {
     con.query(query, (err, result) => {
        if(err) throw err;
        articles = result;
-    });
-    res.render('index', {
+       res.render('index', {
         articles: articles
+       });
     });
 });
 
